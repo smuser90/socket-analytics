@@ -35,7 +35,7 @@ def analyticsPerSecondTest():
     a = Analytics('fruit');
     a.transaction(cart);
     time.sleep(1);
-    ps = a.perSecond();
+    ps = a.catPerSecond();
     if(round(ps,0) == 17):
         return 'pass';
     else:
