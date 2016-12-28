@@ -2,6 +2,10 @@ import json;
 import os;
 import signal;
 import sys;
+from Analytics import Analytics;
+from socketIO_client import SocketIO;
+
+SOCKET_HOST = 'http://eval.socket.nio.works'
 
 def clear_screen():
     print(chr(27) + "[2J");
@@ -12,17 +16,7 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
-
-JSONstr = '{"first_name": "Guido", "last_name":"Rossum"}'
-
-parsedJSON = json.loads(JSONstr);
-
-print(parsedJSON);
-
-from socketIO_client import SocketIO
-
-SOCKET_HOST = 'http://eval.socket.nio.works'
-
+fruitAnalytics = Analytics("fruit");
 
 def handle_message(message, *args):
     """ Called whenever a message comes through the socket.
@@ -31,14 +25,20 @@ def handle_message(message, *args):
         message (str): The message we just received
         *args: Any additional arguments received, likely will be empty
     """
+
     parsedMessage = json.loads(message);
     amount = parsedMessage['amount'];
     cart = parsedMessage['cart'];
     shopper = parsedMessage['shopper']
 
-    print("Amount: ",amount);
-    print("Cart: ",cart);
-    print("Shopper: ",shopper);
+    clear_screen();
+    fruitAnalytics.transaction(cart);
+    print("Mean fruit is",round(fruitAnalytics.getMean()),'per transaction');
+    print("Fruit per second is",round(fruitAnalytics.catPerSecond(),0));
+    print("Transactions per second is",round(fruitAnalytics.transPerSecond(),0))
+    # print("Amount: ",amount);
+    # print("Cart: ",cart);
+    # print("Shopper: ",shopper);
 
 with SocketIO(SOCKET_HOST) as sock:
     # Set up our message handler
