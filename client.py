@@ -33,9 +33,9 @@ def handle_message(message, *args):
 
     clear_screen();
     fruitAnalytics.transaction(cart);
-    print("Mean fruit is",round(fruitAnalytics.getMean()),'per transaction');
-    print("Fruit per second is",round(fruitAnalytics.catPerSecond(),0));
-    print("Transactions per second is",round(fruitAnalytics.transPerSecond(),0))
+    print("Mean fruit is",round(fruitAnalytics.getMean(),2),'per transaction');
+    print("Fruit per second is",round(fruitAnalytics.catPerSecond(),2));
+    print("Transactions per second is",round(fruitAnalytics.transPerSecond(),4))
     # print("Amount: ",amount);
     # print("Cart: ",cart);
     # print("Shopper: ",shopper);
