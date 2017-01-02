@@ -20,6 +20,8 @@ class Analytics:
     def transaction(self, cart):
         self.transactions += 1;
         itemsInCart = 0;
+
+        # Search through the
         for item in cart:
             self.totalItems += item['quantity'];
             if(self.category in item['type']):
